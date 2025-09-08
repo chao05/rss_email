@@ -69,19 +69,21 @@ def send_qq_email_notification(subject, message, to_email):
     from_email = "549454190@qq.com"
     auth_code = APP_PASSWORD
 
-    msg = MIMEText(message, "plain", "utf-8")
-    msg["From"] = from_email 
-    msg["To"] = to_email
+    msg = EmailMessage()
+    msg.set_content(message)
+    msg["From"] = from_email
+    msg["To"] = to_email if isinstance(to_email, str) else ", ".join(to_email)
     msg["Subject"] = subject
 
     try:
         # Connect via SSL
         with smtplib.SMTP_SSL("smtp.qq.com", 465) as server:
             server.login(from_email, auth_code)
-            server.sendmail(from_email, to_email, msg.as_string())
+            server.send_message(msg)
             print("✅ Email sent successfully!")
     except Exception as e:
         print(f"❌ Email failed: {e}")
+    
 
 def main():
     
@@ -89,7 +91,7 @@ def main():
     
     #result = deepseek_analyze(feed_title, feed_summary, feed_link)
 
-    send_qq_email_notification(subject=feed_title, message=feed_link, to_email="yechao@live.cn")    
+    send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao@live.cn", "zhanghc27@126.com"])    
 
     return feed_title, feed_summary, feed_link#, result
 
