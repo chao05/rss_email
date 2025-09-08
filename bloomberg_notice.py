@@ -9,6 +9,11 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+
+SEEN_IDS_FILE = "seen_ids.json"
+with open(SEEN_IDS_FILE, "r") as f:
+    seen_ids = set(json.load(f))
+
 # Example RSS feed (Fashion Network)
 url = "https://feeds.bloomberg.com/markets/news.rss"
 
@@ -20,12 +25,27 @@ def get_rss_feeds(url):
     # Parse the feed
     feed = feedparser.parse(url)
 
-    # assign the values to variables
-    feed_title = html.unescape(feed.entries[0].title)
-    feed_link = feed.entries[0].link
-    feed_summary = html.unescape(feed.entries[0].summary)
+    if feed.entries[0].summary:
 
-    return feed_title, feed_summary, feed_link
+        feed_id = feed.entries[0].id
+
+        if feed_id in seen_ids:
+            print(f"it's already there. step out of this run.")
+            exit(0)
+        else:
+            seen_ids.add(feed_id)
+            with open(SEEN_IDS_FILE, "w") as f:
+                json.dump(list(seen_ids), f, indent=2)
+
+            # assign the values to variables
+            feed_title = html.unescape(feed.entries[0].title)
+            feed_link = feed.entries[0].link
+            feed_summary = html.unescape(feed.entries[0].summary)
+            
+
+        return feed_title, feed_summary, feed_link
+    else:
+        exit(0)
 
 def deepseek_analyze(feed_title, feed_summary, feed_link):
 
