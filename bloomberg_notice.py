@@ -31,7 +31,7 @@ def get_rss_feeds(url):
 
         if feed_id in seen_ids:
             print(f"it's already there. step out of this run.")
-            exit(0)
+            return None, None, None
         else:
             seen_ids.add(feed_id)
             with open(SEEN_IDS_FILE, "w") as f:
@@ -45,7 +45,7 @@ def get_rss_feeds(url):
 
         return feed_title, feed_summary, feed_link
     else:
-        exit(0)
+        return None, None, None
 
 def deepseek_analyze(feed_title, feed_summary, feed_link):
 
@@ -108,7 +108,9 @@ def send_qq_email_notification(subject, message, to_email):
 def main():
     
     feed_title, feed_summary, feed_link = get_rss_feeds(url)
-    
+    if not feed_title:
+        return
+
     #result = deepseek_analyze(feed_title, feed_summary, feed_link)
 
     send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao@live.cn", "zhanghc27@126.com"])    
