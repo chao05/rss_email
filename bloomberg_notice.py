@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Example RSS feed (Fashion Network)
-url = "https://feeds.bloomberg.com/economics/news.rss"
+url = "https://feeds.bloomberg.com/markets/news.rss"
 
 API_KEY = os.environ["API_KEY"]
 APP_PASSWORD = os.environ["APP_PASSWORD"]
