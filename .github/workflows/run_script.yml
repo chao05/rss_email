@@ -3,8 +3,6 @@ name: Run RSS Script
 # Trigger the workflow
 on:
   workflow_dispatch:        # manual trigger
-  schedule:
-    - cron: "*/5 * * * *"  # every 5 minutes (UTC)
 
 jobs:
   run:
