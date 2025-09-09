@@ -49,15 +49,10 @@ def deepseek_analyze(feed_title, feed_summary, feed_link):
 
     client = OpenAI(api_key=API_KEY, base_url="https://api.deepseek.com")
     system_prompt = """You are an assistant that reads and analyzes news articles to tell 
-    if the article is about a luxury brand opening or reopening a boutique, and outputs structured JSON.
+    if the article is about China, and outputs structured JSON.
     Always respond in this JSON format:
     {
-        "is_relevant": true or false,
-        "reason": "the reason for making the decision above",
-        "title": "title of the article",
-        "brand": "brand name mentioned",
-        "location": "city/country mentioned",
-        "url": "url of the article"
+        "is_relevant": true or false
     }"""
     user_content = {
         "title": feed_title,
@@ -109,9 +104,12 @@ def main():
     if not feed_title:
         return
 
-    #result = deepseek_analyze(feed_title, feed_summary, feed_link)
+    result = deepseek_analyze(feed_title, feed_summary, feed_link)
 
-    send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao@live.cn", "zhanghc27@126.com"])    
+    if result["is_relevant"]:
+        send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao25@gmail.com", "zhanghc27@126.com"])
+    else:
+        return
 
 if __name__ == "__main__":
     main()
