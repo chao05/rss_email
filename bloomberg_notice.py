@@ -10,10 +10,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SEEN_IDS_FILE = "seen_ids.json"
-with open(SEEN_IDS_FILE, "r") as f:
-    seen_ids = set(json.load(f))
-
 # Example RSS feed (Fashion Network)
 url = "https://feeds.bloomberg.com/economics/news.rss"
 
@@ -24,6 +20,9 @@ def get_rss_feeds(url):
 
     # Parse the feed
     feed = feedparser.parse(url)
+    SEEN_IDS_FILE = "seen_ids.json"
+    with open(SEEN_IDS_FILE, "r") as f:
+        seen_ids = set(json.load(f))
 
     if feed.entries[0].summary:
 
@@ -41,9 +40,8 @@ def get_rss_feeds(url):
             feed_title = html.unescape(feed.entries[0].title)
             feed_link = feed.entries[0].link
             feed_summary = html.unescape(feed.entries[0].summary)
-            
 
-        return feed_title, feed_summary, feed_link
+            return feed_title, feed_summary, feed_link
     else:
         return None, None, None
 
@@ -114,8 +112,6 @@ def main():
     #result = deepseek_analyze(feed_title, feed_summary, feed_link)
 
     send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao@live.cn", "zhanghc27@126.com"])    
-
-    return feed_title, feed_summary, feed_link#, result
 
 if __name__ == "__main__":
     main()

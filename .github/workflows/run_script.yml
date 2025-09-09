@@ -4,7 +4,7 @@ name: Run RSS Script
 on:
   workflow_dispatch:        # manual trigger
   schedule:
-    - cron: "*/5 * * * *"  # every 15 minutes (UTC)
+    - cron: "*/5 * * * *"  # every 5 minutes (UTC)
 
 jobs:
   run:
@@ -26,5 +26,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Restore seen_ids.json
+        uses: actions/cache/restore@v4
+        with:
+          path: seen_ids.json
+          key: seen-ids-cache
+
       - name: Run script
         run: python bloomberg_notice.py
+
+      - name: Save seen_ids.json
+        uses: actions/cache/save@v4
+        with:
+          path: seen_ids.json
+          key: seen-ids-cache
