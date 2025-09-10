@@ -1,0 +1,12 @@
+[
+    {
+        "url": "https://feeds.bloomberg.com/economics/news.rss",
+        "system_prompt": "bloomberg_china_prompt.txt",
+        "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
+    },
+    {
+        "url": "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
+        "system_prompt": "boutique_prompt.txt",
+        "to_email": ["yechao25@gmail.com"]
+    }
+]
