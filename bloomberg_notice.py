@@ -10,9 +10,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Example RSS feed (Bloomberg)
-url = "https://feeds.bloomberg.com/markets/news.rss"
-
 API_KEY = os.environ["API_KEY"]
 APP_PASSWORD = os.environ["APP_PASSWORD"]
 
@@ -45,15 +42,10 @@ def get_rss_feeds(url):
     else:
         return None, None, None
 
-def deepseek_analyze(feed_title, feed_summary, feed_link):
+def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
 
     client = OpenAI(api_key=API_KEY, base_url="https://api.deepseek.com")
-    system_prompt = """You are an assistant that reads and analyzes news articles to tell 
-    if the article is about China, and outputs structured JSON.
-    Always respond in this JSON format:
-    {
-        "is_relevant": true or false
-    }"""
+    system_prompt = system_prompt_v
     user_content = {
         "title": feed_title,
         "summary": feed_summary,
@@ -98,18 +90,44 @@ def send_qq_email_notification(subject, message, to_email):
         print(f"❌ Email failed: {e}")
 
 def main():
-    
-    feed_title, feed_summary, feed_link = get_rss_feeds(url)
-   
-    if feed_summary:
-        result = deepseek_analyze(feed_title, feed_summary, feed_link)
-    else:
-        return
 
-    if result["is_relevant"]:
-        send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao25@gmail.com", "zhanghc27@126.com"])
-    else:
-        return
+    bloomberg_dict = {
+    "url": "https://feeds.bloomberg.com/markets/news.rss",
+    "system_prompt": """You are an assistant that reads and analyzes news articles to tell 
+                    if the article is about China, and outputs structured JSON.
+                    Always respond in this JSON format:
+                    {
+                        "is_relevant": true or false
+                    }""",
+    "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
+    }
+
+    boutique_dict = {
+        "url": "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
+        "system_prompt": """You are an assistant that reads and analyzes news articles to tell  
+                        if the article is about a luxury brand opening or reopening a boutique, and outputs structured JSON.
+                        Always respond in this JSON format:
+                        {
+                            "is_relevant": true or false
+                        }""",
+        "to_email": ["yechao25@gmail.com", "chao.ye@hafele.com.cn"]
+    }
+
+    tasks = [bloomberg_dict, boutique_dict]
+
+    for task in tasks:
+
+        feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"))
+    
+        if feed_summary:
+            result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
+        else:
+            continue
+
+        if result["is_relevant"]:
+            send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
+        else:
+            continue
 
 if __name__ == "__main__":
     main()
