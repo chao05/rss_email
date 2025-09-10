@@ -13,13 +13,10 @@ load_dotenv()
 API_KEY = os.environ["API_KEY"]
 APP_PASSWORD = os.environ["APP_PASSWORD"]
 
-def get_rss_feeds(url):
+def get_rss_feeds(url, seen_ids):
 
     # Parse the feed
     feed = feedparser.parse(url)
-    SEEN_IDS_FILE = "seen_ids.json"
-    with open(SEEN_IDS_FILE, "r") as f:
-        seen_ids = set(json.load(f))
 
     if feed.entries[0].summary:
 
@@ -30,8 +27,6 @@ def get_rss_feeds(url):
             return None, None, None
         else:
             seen_ids.add(feed_id)
-            with open(SEEN_IDS_FILE, "w") as f:
-                json.dump(list(seen_ids), f, indent=2)
 
             # assign the values to variables
             feed_title = html.unescape(feed.entries[0].title)
@@ -92,7 +87,7 @@ def send_qq_email_notification(subject, message, to_email):
 def main():
 
     bloomberg_dict = {
-    "url": "https://feeds.bloomberg.com/markets/news.rss",
+    "url": "https://feeds.bloomberg.com/economics/news.rss",
     "system_prompt": """You are an assistant that reads and analyzes news articles to tell 
                     if the article is about China, and outputs structured JSON.
                     Always respond in this JSON format:
@@ -105,19 +100,24 @@ def main():
     boutique_dict = {
         "url": "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
         "system_prompt": """You are an assistant that reads and analyzes news articles to tell  
-                        if the article is about a luxury brand opening or reopening a boutique, and outputs structured JSON.
+                        if the article is about a luxury brand opening or reopening a boutique, 
+                        and outputs structured JSON.
                         Always respond in this JSON format:
                         {
                             "is_relevant": true or false
                         }""",
-        "to_email": ["yechao25@gmail.com", "chao.ye@hafele.com.cn"]
+        "to_email": ["yechao25@gmail.com"]
     }
 
     tasks = [bloomberg_dict, boutique_dict]
 
+    SEEN_IDS_FILE = "seen_ids.json"
+    with open(SEEN_IDS_FILE, "r") as f:
+        seen_ids = set(json.load(f))
+
     for task in tasks:
 
-        feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"))
+        feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids)
     
         if feed_summary:
             result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
@@ -128,6 +128,9 @@ def main():
             send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
         else:
             continue
+
+    with open(SEEN_IDS_FILE, "w") as f:
+        json.dump(list(seen_ids), f, indent=2)
 
 if __name__ == "__main__":
     main()
