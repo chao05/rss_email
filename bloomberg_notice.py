@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Example RSS feed (Fashion Network)
+# Example RSS feed (Bloomberg)
 url = "https://feeds.bloomberg.com/markets/news.rss"
 
 API_KEY = os.environ["API_KEY"]
@@ -96,15 +96,15 @@ def send_qq_email_notification(subject, message, to_email):
             print("✅ Email sent successfully!")
     except Exception as e:
         print(f"❌ Email failed: {e}")
-    
 
 def main():
     
     feed_title, feed_summary, feed_link = get_rss_feeds(url)
-    if not feed_title:
+   
+    if feed_summary:
+        result = deepseek_analyze(feed_title, feed_summary, feed_link)
+    else:
         return
-
-    result = deepseek_analyze(feed_title, feed_summary, feed_link)
 
     if result["is_relevant"]:
         send_qq_email_notification(subject=feed_title, message=feed_link, to_email=["yechao25@gmail.com", "zhanghc27@126.com"])
