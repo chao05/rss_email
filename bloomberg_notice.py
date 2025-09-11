@@ -19,7 +19,7 @@ def get_rss_feeds(url, seen_ids):
 
     if feed.entries[0].summary:
 
-        feed_id = feed.entries[0].id
+        feed_id = feed.entries[0].link
         if feed_id in seen_ids:
             print(f"it's already there. step out of this run.")
             return None, None, None
