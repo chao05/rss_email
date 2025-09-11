@@ -8,5 +8,10 @@
         "url": "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
         "system_prompt": "boutique_prompt.txt",
         "to_email": ["yechao25@gmail.com"]
+    },
+    {
+        "url": "https://cpp-luxury.com/feed/",
+        "system_prompt": "boutique_prompt.txt",
+        "to_email": ["yechao25@gmail.com"]
     }
 ]
