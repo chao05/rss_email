@@ -1,6 +1,6 @@
 [
     {
-        "url": "https://feeds.bloomberg.com/economics/news.rss",
+        "url": "https://feeds.bloomberg.com/markets/news.rss",
         "system_prompt": "bloomberg_china_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
