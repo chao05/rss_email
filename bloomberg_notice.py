@@ -89,7 +89,7 @@ def main():
         with open(task["system_prompt"], "r", encoding="utf-8") as f:
             task["system_prompt"] = f.read()
 
-    with open("seen_ids.json", "r") as f:
+    with open("cache/seen_ids.json", "r") as f:
         seen_ids = set(json.load(f))
 
     for task in tasks:
@@ -106,7 +106,7 @@ def main():
         else:
             continue
 
-    with open("seen_ids.json", "w") as f:
+    with open("cache/seen_ids.json", "w") as f:
         json.dump(list(seen_ids), f, indent=2)
 
 if __name__ == "__main__":

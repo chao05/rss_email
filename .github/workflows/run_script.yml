@@ -27,7 +27,7 @@ jobs:
       - name: Restore seen_ids.json
         uses: actions/cache/restore@v4
         with:
-          path: seen_ids.json
+          path: cache/seen_ids.json
           key: seen-ids-cache
 
       - name: Run script
@@ -36,5 +36,5 @@ jobs:
       - name: Save seen_ids.json
         uses: actions/cache/save@v4
         with:
-          path: seen_ids.json
+          path: cache/seen_ids.json
           key: seen-ids-cache
