@@ -10,6 +10,7 @@ jobs:
     env:
       APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
       API_KEY: ${{ secrets.API_KEY }}
+      GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
