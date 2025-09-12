@@ -7,11 +7,15 @@ from email.mime.text import MIMEText
 from email.message import EmailMessage
 import os
 from dotenv import load_dotenv
+import github
+from github import Github
 
 load_dotenv()
 
 API_KEY = os.environ["API_KEY"]
 APP_PASSWORD = os.environ["APP_PASSWORD"]
+GIST_TOKEN = os.environ["GIST_TOKEN"]
+GIST_ID= "859657a15de768466cd69aa7f51c9c49"
 
 def get_rss_feeds(url, seen_ids):
     # Parse the feed
@@ -31,6 +35,7 @@ def get_rss_feeds(url, seen_ids):
             feed_summary = html.unescape(feed.entries[0].summary)
             return feed_title, feed_summary, feed_link
     else:
+        print(f"there's no summary here.")
         return None, None, None
 
 def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
@@ -89,8 +94,9 @@ def main():
         with open(task["system_prompt"], "r", encoding="utf-8") as f:
             task["system_prompt"] = f.read()
 
-    with open("cache/seen_ids.json", "r") as f:
-        seen_ids = set(json.load(f))
+    g = Github(GIST_TOKEN)
+    gist = g.get_gist(GIST_ID)
+    seen_ids = set(json.loads(gist.files["seen_ids.json"].content))
 
     for task in tasks:
 
@@ -106,8 +112,11 @@ def main():
         else:
             continue
 
-    with open("cache/seen_ids.json", "w") as f:
-        json.dump(list(seen_ids), f, indent=2)
+    gist.edit(
+    files={
+        "seen_ids.json": github.InputFileContent(json.dumps(list(seen_ids), indent=2))
+    }
+    )
 
 if __name__ == "__main__":
     main()
