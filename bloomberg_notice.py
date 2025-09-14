@@ -89,10 +89,12 @@ def main():
 
     with open("tasks.json", "r") as f:
         tasks = json.load(f)
-
     for task in tasks:
-        with open(task["system_prompt"], "r", encoding="utf-8") as f:
-            task["system_prompt"] = f.read()
+        if task["system_prompt"]:
+            with open(task["system_prompt"], "r", encoding="utf-8") as f:
+                task["system_prompt"] = f.read()
+        else:
+            continue
 
     g = Github(GIST_TOKEN)
     gist = g.get_gist(GIST_ID)
@@ -100,17 +102,25 @@ def main():
 
     for task in tasks:
 
-        feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids)
+        if task["url"] and task["system_prompt"] and task["to_email"]:
 
-        if feed_summary:
-            result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
-        else:
-            continue
-        
-        if result["is_relevant"]:
-            send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
-        else:
-            continue
+            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids)
+            if feed_summary:
+                result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
+            else:
+                continue
+            if result["is_relevant"]:
+                send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
+            else:
+                continue
+
+        elif task["url"] and task["to_email"]:
+
+            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids)
+            if feed_title:
+                send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
+            else:
+                continue
 
     gist.edit(
     files={
