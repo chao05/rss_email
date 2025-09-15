@@ -1,7 +1,7 @@
 [
     {
         "url": "https://feeds.bloomberg.com/markets/news.rss",
-        "system_prompt": "bloomberg_china_prompt.txt",
+        "system_prompt": "prompts/bloomberg_china_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
@@ -11,12 +11,12 @@
     },
     {
         "url": "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
-        "system_prompt": "boutique_prompt.txt",
+        "system_prompt": "prompts/boutique_prompt.txt",
         "to_email": ["yechao25@gmail.com"]
     },
     {
         "url": "https://cpp-luxury.com/feed/",
-        "system_prompt": "boutique_prompt.txt",
+        "system_prompt": "prompts/boutique_prompt.txt",
         "to_email": ["yechao25@gmail.com"]
     }
 ]
