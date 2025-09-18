@@ -15,6 +15,11 @@
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
+        "url": "https://www.wired.com/feed/tag/ai/latest/rss",
+        "system_prompt": null,
+        "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
+    },
+    {
         "url": "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
         "system_prompt": "prompts/boutique_prompt.txt",
         "to_email": ["yechao25@gmail.com"]
