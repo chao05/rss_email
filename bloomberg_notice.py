@@ -21,8 +21,13 @@ def get_rss_feeds(url, seen_ids):
     # Parse the feed
     feed = feedparser.parse(url)
 
-    if feed.entries[0].summary:
-
+    try:
+        feed.entries[0].summary
+    except NameError:
+        print(f"there's no summary here.")
+        return None, None, None
+    else:
+        print(f"there is a summary here.")
         feed_id = feed.entries[0].link
         if feed_id in seen_ids:
             print(f"it's already there. step out of this run.")
@@ -34,9 +39,6 @@ def get_rss_feeds(url, seen_ids):
             feed_link = feed.entries[0].link
             feed_summary = html.unescape(feed.entries[0].summary)
             return feed_title, feed_summary, feed_link
-    else:
-        print(f"there's no summary here.")
-        return None, None, None
 
 def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
 
