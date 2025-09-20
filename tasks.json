@@ -6,7 +6,7 @@
     },
     {
         "url": "https://feeds.bloomberg.com/economics/news.rss",
-        "system_prompt": "prompts/bloomberg_china_prompt.txt",
+        "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
@@ -16,7 +16,7 @@
     },
     {
         "url": "https://feeds.bloomberg.com/technology/news.rss",
-        "system_prompt": "prompts/bloomberg_china_prompt.txt",
+        "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
