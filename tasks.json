@@ -5,6 +5,11 @@
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
+        "url": "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
+        "system_prompt": "prompts/bloomberg_china_prompt.txt",
+        "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
+    },
+    {
         "url": "https://www.scmp.com/rss/43/feed/",
         "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
