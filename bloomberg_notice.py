@@ -23,7 +23,7 @@ def get_rss_feeds(url, seen_ids):
 
     try:
         feed.entries[0].summary
-    except NameError:
+    except AttributeError:
         print(f"there's no summary here.")
         return None, None, None
     else:
