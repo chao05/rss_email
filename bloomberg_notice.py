@@ -64,9 +64,13 @@ def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
         max_tokens=4096
     )
     result_json = response.choices[0].message.content
-    result_dict = json.loads(result_json)
-
-    return result_dict
+    try:
+        result_dict = json.loads(result_json)
+    except json.JSONDecodeError:
+        print(f"Invalid or empty JSON data received.")
+        return None
+    else:
+         return result_dict
 
 def send_qq_email_notification(subject, message, to_email):
     from_email = "549454190@qq.com"
@@ -111,7 +115,9 @@ def main():
                 result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
             else:
                 continue
-            if result["is_relevant"]:
+            if result is None:
+                continue
+            elif result["is_relevant"]:
                 send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
             else:
                 continue
