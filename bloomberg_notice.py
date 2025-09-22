@@ -23,8 +23,11 @@ def get_rss_feeds(url, seen_ids, new_ids):
 
     try:
         feed.entries[0].summary
-    except AttributeError:
-        print(f"there's no summary here.")
+    except AttributeError as e:
+        print(f"{e} reported, meaning there's no summary here.")
+        return None, None, None
+    except IndexError as e:
+        print(f"{e} reported, meaning nothing has been fetched.")
         return None, None, None
     else:
         print(f"there is a summary here.")
