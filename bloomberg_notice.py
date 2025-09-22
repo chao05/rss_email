@@ -50,20 +50,24 @@ def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
         "link": feed_link
     }
     user_prompt = json.dumps(user_content, ensure_ascii=False)
+    try:
+        response = client.chat.completions.create(
+            model="deepseek-reasoner",
+            messages=
+            [
+                {"role": "system", "content": system_prompt},
 
-    response = client.chat.completions.create(
-        model="deepseek-reasoner",
-        messages=
-        [
-            {"role": "system", "content": system_prompt},
-
-            {"role": "user", "content": user_prompt},
-        ],
-        stream=False,
-        temperature=1.3,
-        max_tokens=4096
-    )
-    result_json = response.choices[0].message.content
+                {"role": "user", "content": user_prompt},
+            ],
+            stream=False,
+            temperature=1.3,
+            max_tokens=4096
+        )
+    except TimeoutError as e:
+        print(f"error reported: {e}")
+        return None
+    else:
+        result_json = response.choices[0].message.content
     try:
         result_dict = json.loads(result_json)
     except json.JSONDecodeError:
@@ -137,6 +141,8 @@ def main():
             "seen_ids.json": github.InputFileContent(json.dumps(list(new_ids), indent=2))
         }
         )
+    else:
+        print(f"the links fetched this time are same as the one fetched last time.")
 
 if __name__ == "__main__":
     main()
