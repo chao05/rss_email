@@ -17,7 +17,7 @@ APP_PASSWORD = os.environ["APP_PASSWORD"]
 GIST_TOKEN = os.environ["GIST_TOKEN"]
 GIST_ID= "859657a15de768466cd69aa7f51c9c49"
 
-def get_rss_feeds(url, seen_ids):
+def get_rss_feeds(url, seen_ids, new_ids):
     # Parse the feed
     feed = feedparser.parse(url)
 
@@ -29,11 +29,11 @@ def get_rss_feeds(url, seen_ids):
     else:
         print(f"there is a summary here.")
         feed_id = feed.entries[0].link
+        new_ids.add(feed_id)
         if feed_id in seen_ids:
             print(f"it's already there. step out of this run.")
             return None, None, None
         else:
-            seen_ids.add(feed_id)
             # assign the values to variables
             feed_title = html.unescape(feed.entries[0].title)
             feed_link = feed.entries[0].link
@@ -105,12 +105,13 @@ def main():
     g = Github(GIST_TOKEN)
     gist = g.get_gist(GIST_ID)
     seen_ids = set(json.loads(gist.files["seen_ids.json"].content))
+    new_ids=set()
 
     for task in tasks:
 
         if task["url"] and task["system_prompt"] and task["to_email"]:
 
-            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids)
+            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
             if feed_summary:
                 result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
             else:
@@ -124,17 +125,18 @@ def main():
 
         elif task["url"] and task["to_email"]:
 
-            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids)
+            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
             if feed_title:
                 send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
             else:
                 continue
 
-    gist.edit(
-    files={
-        "seen_ids.json": github.InputFileContent(json.dumps(list(seen_ids), indent=2))
-    }
-    )
+    if new_ids != seen_ids:
+        gist.edit(
+        files={
+            "seen_ids.json": github.InputFileContent(json.dumps(list(new_ids), indent=2))
+        }
+        )
 
 if __name__ == "__main__":
     main()
