@@ -1,6 +1,6 @@
 import feedparser
 import html
-from openai import OpenAI
+from openai import OpenAI, InternalServerError
 import json
 import smtplib
 from email.mime.text import MIMEText
@@ -30,13 +30,14 @@ def get_rss_feeds(url, seen_ids, new_ids):
         print(f"{e} reported, meaning nothing has been fetched.")
         return None, None, None
     else:
-        print(f"there is a summary here.")
+        print(f"this feed is going to be processed.")
         feed_id = feed.entries[0].link
         new_ids.add(feed_id)
         if feed_id in seen_ids:
             print(f"it's already there. step out of this run.")
             return None, None, None
         else:
+            print(f"this feed is going to next step.")
             # assign the values to variables
             feed_title = html.unescape(feed.entries[0].title)
             feed_link = feed.entries[0].link
@@ -69,6 +70,9 @@ def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
     except TimeoutError as e:
         print(f"error reported: {e}")
         return None
+    except InternalServerError as e:
+        print(f"error reported: {e}")
+        return None
     else:
         result_json = response.choices[0].message.content
     try:
@@ -77,7 +81,8 @@ def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
         print(f"Invalid or empty JSON data received.")
         return None
     else:
-         return result_dict
+        print(f"AI analysis done. this feed is going to next step.")
+        return result_dict
 
 def send_qq_email_notification(subject, message, to_email):
     from_email = "549454190@qq.com"
@@ -139,6 +144,7 @@ def main():
                 continue
 
     if new_ids != seen_ids:
+        print(f"the new ids will be written into gist file.")
         gist.edit(
         files={
             "seen_ids.json": github.InputFileContent(json.dumps(list(new_ids), indent=2))
