@@ -8,7 +8,7 @@ from email.message import EmailMessage
 import os
 from dotenv import load_dotenv
 import github
-from github import Github
+from github import Github, Auth
 
 load_dotenv()
 
@@ -114,7 +114,8 @@ def main():
         else:
             continue
 
-    g = Github(GIST_TOKEN)
+    auth = Auth.Token(GIST_TOKEN)
+    g = Github(auth=auth)
     gist = g.get_gist(GIST_ID)
     seen_ids = set(json.loads(gist.files["seen_ids.json"].content))
     new_ids=set()
