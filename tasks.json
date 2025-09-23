@@ -20,6 +20,11 @@
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
+        "url": "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
+        "system_prompt": "prompts/bloomberg_china_prompt.txt",
+        "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
+    },
+    {
         "url": "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
         "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
