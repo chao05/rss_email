@@ -12,9 +12,9 @@
             "https://feeds.bloomberg.com/politics/news.rss",
             "https://feeds.bloomberg.com/technology/news.rss",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
-            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
             "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
-            "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed"
+            "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
+            "https://finance.yahoo.com/news/rss"
 
         ],
         "system_prompt": "prompts/china_prompt.txt",
@@ -22,7 +22,7 @@
     },
     {
         "urls": [
-            "https://finance.yahoo.com/news/rss"
+            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910"
         ],
         "system_prompt": "prompts/ai_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
