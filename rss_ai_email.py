@@ -99,14 +99,20 @@ def send_qq_email_notification(subject, message, to_email):
 
 def main():
 
-    with open("tasks.json", "r") as f:
-        tasks = json.load(f)
-    for task in tasks:
-        if task["system_prompt"]:
-            with open(task["system_prompt"], "r", encoding="utf-8") as f:
-                task["system_prompt"] = f.read()
-        else:
-            continue
+    tasks = list()
+    with open("combined_tasks.json", "r") as f:
+        combined_tasks = json.load(f)
+    for combined_task in combined_tasks:
+        for url in combined_task["urls"]:
+            task = dict()
+            task["url"] = url
+            task["to_email"] = combined_task["to_email"]
+            if combined_task["system_prompt"]:
+                with open(combined_task["system_prompt"], "r", encoding="utf-8") as f:
+                    task["system_prompt"] = f.read()
+            else:
+                task["system_prompt"] = None            
+            tasks.append(task)
 
     auth = Auth.Token(GIST_TOKEN)
     g = Github(auth=auth)
