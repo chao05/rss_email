@@ -68,5 +68,10 @@
         "url": "https://www.luxurydaily.com/category/sectors/retail-industry-sectors/feed/",
         "system_prompt": "prompts/boutique_prompt.txt",
         "to_email": ["yechao25@gmail.com"]
+    },
+    {
+        "url": "https://www.justluxe.com/rss/rss-channels.php?cat=9",
+        "system_prompt": "prompts/boutique_prompt.txt",
+        "to_email": ["yechao25@gmail.com"]
     }
 ]

@@ -40,13 +40,12 @@ def get_rss_feeds(url, seen_ids, new_ids):
             feed_link = feed.entries[0].link
             return feed_title, feed_link
 
-def deepseek_analyze(feed_title, feed_link, system_prompt_v):
+def deepseek_analyze(feed_title, system_prompt_v):
 
     client = OpenAI(api_key=API_KEY, base_url="https://api.deepseek.com")
     system_prompt = system_prompt_v
     user_content = {
         "title": feed_title,
-        "link": feed_link
     }
     user_prompt = json.dumps(user_content, ensure_ascii=False)
     try:
@@ -118,10 +117,9 @@ def main():
     for task in tasks:
 
         if task["url"] and task["system_prompt"] and task["to_email"]:
-
             feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
             if feed_title:
-                result = deepseek_analyze(feed_title, feed_link, task.get("system_prompt"))
+                result = deepseek_analyze(feed_title, task.get("system_prompt"))
             else:
                 continue
             if result is None:
@@ -132,7 +130,6 @@ def main():
                 continue
 
         elif task["url"] and task["to_email"]:
-
             feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
             if feed_title:
                 send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
