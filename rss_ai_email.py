@@ -22,35 +22,30 @@ def get_rss_feeds(url, seen_ids, new_ids):
     feed = feedparser.parse(url)
 
     try:
-        feed.entries[0].summary
-    except AttributeError as e:
-        print(f"{e} reported, meaning there's no summary here.")
-        return None, None, None
+        feed.entries[0].title
     except IndexError as e:
         print(f"{e} reported, meaning nothing has been fetched.")
-        return None, None, None
+        return None, None
     else:
-        print(f"this feed is going to be processed.")
+        print(f"a feed was just fetched.")
         feed_id = feed.entries[0].link
         new_ids.add(feed_id)
         if feed_id in seen_ids:
             print(f"it's already there. step out of this run.")
-            return None, None, None
+            return None, None
         else:
             print(f"this feed is going to next step.")
             # assign the values to variables
             feed_title = html.unescape(feed.entries[0].title)
             feed_link = feed.entries[0].link
-            feed_summary = html.unescape(feed.entries[0].summary)
-            return feed_title, feed_summary, feed_link
+            return feed_title, feed_link
 
-def deepseek_analyze(feed_title, feed_summary, feed_link, system_prompt_v):
+def deepseek_analyze(feed_title, feed_link, system_prompt_v):
 
     client = OpenAI(api_key=API_KEY, base_url="https://api.deepseek.com")
     system_prompt = system_prompt_v
     user_content = {
         "title": feed_title,
-        "summary": feed_summary,
         "link": feed_link
     }
     user_prompt = json.dumps(user_content, ensure_ascii=False)
@@ -124,9 +119,9 @@ def main():
 
         if task["url"] and task["system_prompt"] and task["to_email"]:
 
-            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
-            if feed_summary:
-                result = deepseek_analyze(feed_title, feed_summary, feed_link, task.get("system_prompt"))
+            feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
+            if feed_title:
+                result = deepseek_analyze(feed_title, feed_link, task.get("system_prompt"))
             else:
                 continue
             if result is None:
@@ -138,7 +133,7 @@ def main():
 
         elif task["url"] and task["to_email"]:
 
-            feed_title, feed_summary, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
+            feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
             if feed_title:
                 send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
             else:

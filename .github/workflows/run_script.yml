@@ -26,4 +26,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run script
-        run: python bloomberg_notice.py
+        run: python rss_ai_email.py
