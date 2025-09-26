@@ -22,7 +22,6 @@
             "https://www.scmp.com/rss/43/feed/",
             "https://www.scmp.com/rss/318421/feed/",
             "https://www.wired.com/feed/tag/ai/latest/rss",
-            "https://feeds.bloomberg.com/bview/news.rss",
             "https://feeds.bloomberg.com/crypto/news.rss"
         ],
         "system_prompt": null,
