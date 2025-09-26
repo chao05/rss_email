@@ -6,6 +6,7 @@
             "https://feeds.bloomberg.com/economics/news.rss",
             "https://feeds.bloomberg.com/technology/news.rss",
             "https://feeds.bloomberg.com/green/news.rss",
+            "https://feeds.bloomberg.com/bview/news.rss",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000113",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
@@ -21,7 +22,8 @@
             "https://www.scmp.com/rss/43/feed/",
             "https://www.scmp.com/rss/318421/feed/",
             "https://www.wired.com/feed/tag/ai/latest/rss",
-            "https://feeds.bloomberg.com/bview/news.rss"
+            "https://feeds.bloomberg.com/bview/news.rss",
+            "https://feeds.bloomberg.com/crypto/news.rss"
         ],
         "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
