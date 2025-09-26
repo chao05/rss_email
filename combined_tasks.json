@@ -1,33 +1,19 @@
 [
     {
         "urls": [
-            "https://feeds.bloomberg.com/markets/news.rss"
-
-        ],
-        "system_prompt": "prompts/treasury_yields_prompt.txt",
-        "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
-    },
-    {
-        "urls": [
+            "https://feeds.bloomberg.com/markets/news.rss",
             "https://feeds.bloomberg.com/politics/news.rss",
             "https://feeds.bloomberg.com/economics/news.rss",
             "https://feeds.bloomberg.com/technology/news.rss",
             "https://feeds.bloomberg.com/green/news.rss",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000113",
+            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
             "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
             "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
             "https://finance.yahoo.com/news/rss"
-
         ],
-        "system_prompt": "prompts/china_prompt.txt",
-        "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
-    },
-    {
-        "urls": [
-            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910"
-        ],
-        "system_prompt": "prompts/ai_prompt.txt",
+        "system_prompt": "prompts/topics_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
     },
     {
@@ -35,7 +21,7 @@
             "https://www.scmp.com/rss/43/feed/",
             "https://www.scmp.com/rss/318421/feed/",
             "https://www.wired.com/feed/tag/ai/latest/rss",
-            "https://feeds.bloomberg.com/crypto/news.rss"
+            "https://feeds.bloomberg.com/bview/news.rss"
         ],
         "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
