@@ -20,7 +20,7 @@ GIST_ID= "859657a15de768466cd69aa7f51c9c49"
 def get_rss_feeds(url, seen_ids, new_ids):
     # Parse the feed
     feed = feedparser.parse(url)
-
+    bloomberg_video = "www.bloomberg.com/news/videos/"
     try:
         feed.entries[0].title
     except IndexError as e:
@@ -31,7 +31,13 @@ def get_rss_feeds(url, seen_ids, new_ids):
         feed_id = feed.entries[0].link
         new_ids.add(feed_id)
         if feed_id in seen_ids:
-            print(f"it's already there. step out of this run.")
+            print(f"it's already there. let's fetch next feed.")
+            return None, None
+        elif feed_id in new_ids:
+            print(f"it was already fetched in this run. let's fetch next feed.")
+            return None, None
+        elif bloomberg_video in feed_id:
+            print(f"it's a bloomberg video link. ignore it. let's fetch next feed.")
             return None, None
         else:
             print(f"this feed is going to next step.")
