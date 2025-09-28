@@ -46,10 +46,10 @@ def get_rss_feeds(url, seen_ids, new_ids):
             feed_link = feed.entries[0].link
             return feed_title, feed_link
 
-def deepseek_analyze(feed_title, system_prompt_v):
+def deepseek_analyze(feed_title, system_prompt_p):
 
     client = OpenAI(api_key=API_KEY, base_url="https://api.deepseek.com")
-    system_prompt = system_prompt_v
+    system_prompt = system_prompt_p
     user_content = {
         "title": feed_title,
     }
