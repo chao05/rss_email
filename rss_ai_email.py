@@ -28,22 +28,20 @@ def get_rss_feeds(url, seen_ids, new_ids):
         return None, None
     else:
         print(f"a feed was just fetched.")
-        feed_id = feed.entries[0].link
-        new_ids.add(feed_id)
-        if feed_id in seen_ids:
+        feed_link = feed.entries[0].link
+        if feed_link in seen_ids:
             print(f"it's already there. let's fetch next feed.")
-            return None, None
-        elif feed_id in new_ids:
+            return None, feed_link
+        elif feed_link in new_ids:
             print(f"it was already fetched in this run. let's fetch next feed.")
-            return None, None
-        elif bloomberg_video in feed_id:
+            return None, feed_link
+        elif bloomberg_video in feed_link:
             print(f"it's a bloomberg video link. ignore it. let's fetch next feed.")
-            return None, None
+            return None, feed_link
         else:
             print(f"this feed is going to next step.")
             # assign the values to variables
             feed_title = html.unescape(feed.entries[0].title)
-            feed_link = feed.entries[0].link
             return feed_title, feed_link
 
 def deepseek_analyze(feed_title, system_prompt_p):
@@ -128,25 +126,21 @@ def main():
 
     for task in tasks:
 
-        if task["url"] and task["system_prompt"] and task["to_email"]:
-            feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
-            if feed_title:
-                result = deepseek_analyze(feed_title, task.get("system_prompt"))
-            else:
-                continue
+        feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
+        if feed_link is None:
+            continue
+        else:
+            new_ids.add(feed_link)
+        if feed_title is None:
+            continue
+        elif task["system_prompt"]:
+            result = deepseek_analyze(feed_title, task.get("system_prompt"))
             if result is None:
                 continue
             elif result["is_relevant"]:
                 send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
-            else:
-                continue
-
-        elif task["url"] and task["to_email"]:
-            feed_title, feed_link = get_rss_feeds(task.get("url"), seen_ids, new_ids)
-            if feed_title:
-                send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
-            else:
-                continue
+        else:
+            send_qq_email_notification(subject=feed_title, message=feed_link, to_email=task.get("to_email"))
 
     if new_ids != seen_ids:
         print(f"the new ids will be written into gist file.")
