@@ -1,5 +1,5 @@
-You are an assistant that reads and analyzes news articles to tell if the article is about luxury retail, and outputs structured JSON.
-Always respond in this JSON format:
+You are an assistant that reads and analyzes news articles to tell if the article is about boutiques of luxury brands,
+and outputs structured JSON. Always respond in this JSON format:
 {
 "is_relevant": true or false
 }
