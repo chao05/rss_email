@@ -12,7 +12,9 @@
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
             "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
-            "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed"
+            "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
+            "https://feeds.content.dowjones.io/public/rss/socialpoliticsfeed",
+            "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain"
         ],
         "system_prompt": "prompts/topics_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
@@ -31,8 +33,7 @@
         "urls": [
             "https://ww.fashionnetwork.com/rss/feed/ww,1.xml",
             "https://cpp-luxury.com/feed/",
-            "https://www.luxurydaily.com/category/sectors/retail-industry-sectors/feed/",
-            "https://www.justluxe.com/rss/rss-channels.php?cat=9"
+            "https://www.luxurydaily.com/category/sectors/retail-industry-sectors/feed/"
         ],
         "system_prompt": "prompts/luxury_retail_prompt.txt",
         "to_email": ["yechao25@gmail.com"]
