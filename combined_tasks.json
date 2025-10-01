@@ -10,9 +10,9 @@
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19832390",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000113",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19854910",
+            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=20910258",
             "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
-            "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
-            "https://finance.yahoo.com/news/rss"
+            "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed"
         ],
         "system_prompt": "prompts/topics_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
