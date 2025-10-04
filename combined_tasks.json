@@ -3,7 +3,6 @@
         "urls": [
             "https://feeds.bloomberg.com/markets/news.rss",
             "https://feeds.bloomberg.com/politics/news.rss",
-            "https://feeds.bloomberg.com/economics/news.rss",
             "https://feeds.bloomberg.com/technology/news.rss",
             "https://feeds.bloomberg.com/green/news.rss",
             "https://feeds.bloomberg.com/bview/news.rss",
@@ -27,7 +26,8 @@
             "https://www.scmp.com/rss/318421/feed/",
             "https://www.wired.com/feed/tag/ai/latest/rss",
             "https://feeds.bloomberg.com/crypto/news.rss",
-            "https://feeds.bloomberg.com/wealth/news.rss"
+            "https://feeds.bloomberg.com/wealth/news.rss",
+            "https://feeds.bloomberg.com/economics/news.rss"
         ],
         "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
