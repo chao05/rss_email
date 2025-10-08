@@ -21,6 +21,7 @@ def get_rss_feeds(url, seen_ids, new_ids):
     # Parse the feed
     feed = feedparser.parse(url)
     bloomberg_video = "www.bloomberg.com/news/videos/"
+    bloomberg_audio = "www.bloomberg.com/news/audio/"
     try:
         feed.entries[0].title
     except IndexError as e:
@@ -37,6 +38,9 @@ def get_rss_feeds(url, seen_ids, new_ids):
             return None, feed_link
         elif bloomberg_video in feed_link:
             print(f"it's a bloomberg video link. ignore it. let's fetch next feed.")
+            return None, feed_link
+        elif bloomberg_audio in feed_link:
+            print(f"it's a bloomberg audio link. ignore it. let's fetch next feed.")
             return None, feed_link
         else:
             print(f"this feed is going to next step.")
