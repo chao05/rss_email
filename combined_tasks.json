@@ -17,7 +17,7 @@
             "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
             "https://feeds.content.dowjones.io/public/rss/socialpoliticsfeed",
             "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
-            "https://finance.yahoo.com/news/rss"
+            "https://finance.yahoo.com/rss/"
         ],
         "system_prompt": "prompts/topics_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
