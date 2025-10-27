@@ -30,7 +30,8 @@
             "https://feeds.bloomberg.com/crypto/news.rss",
             "https://feeds.bloomberg.com/wealth/news.rss",
             "https://feeds.bloomberg.com/economics/news.rss",
-            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054"
+            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001054",
+            "https://seekingalpha.com/tag/wall-st-breakfast.xml"
         ],
         "system_prompt": null,
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
