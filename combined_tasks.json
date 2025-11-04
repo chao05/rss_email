@@ -15,10 +15,12 @@
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=19794221",
             "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=15837362",
+            "https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10000664",
             "https://feeds.content.dowjones.io/public/rss/RSSWorldNews",
             "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
             "https://feeds.content.dowjones.io/public/rss/socialpoliticsfeed",
             "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
+            "https://gizmodo.com/feed",
             "https://finance.yahoo.com/rss/"
         ],
         "system_prompt": "prompts/topics_prompt.txt",
