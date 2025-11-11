@@ -1,6 +1,6 @@
 import feedparser
 import html
-from openai import OpenAI, InternalServerError
+from openai import OpenAI, InternalServerError, NotFoundError
 import json
 import smtplib
 from email.mime.text import MIMEText
@@ -73,6 +73,9 @@ def deepseek_analyze(feed_title, system_prompt_p):
         print(f"error reported: {e}")
         return None
     except InternalServerError as e:
+        print(f"error reported: {e}")
+        return None
+    except NotFoundError as e:
         print(f"error reported: {e}")
         return None
     else:
