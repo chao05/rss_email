@@ -20,8 +20,7 @@
             "https://feeds.content.dowjones.io/public/rss/socialeconomyfeed",
             "https://feeds.content.dowjones.io/public/rss/socialpoliticsfeed",
             "https://feeds.content.dowjones.io/public/rss/RSSMarketsMain",
-            "https://gizmodo.com/feed",
-            "https://finance.yahoo.com/rss/"
+            "https://gizmodo.com/feed"
         ],
         "system_prompt": "prompts/topics_prompt.txt",
         "to_email": ["yechao25@gmail.com", "zhanghc27@126.com"]
